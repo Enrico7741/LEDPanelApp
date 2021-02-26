@@ -21,4 +21,16 @@ public class MainController {
     public boolean isConnected() {
         return isConnected;
     }
+
+    public void getStatus() {
+        connection.getStatus();
+    }
+
+    public void turnOn() {
+        connection.turnOn();
+    }
+
+    public void turnOff() {
+        connection.turnOff();
+    }
 }

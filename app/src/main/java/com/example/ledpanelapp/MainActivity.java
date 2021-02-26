@@ -53,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
             changeToDisconnected();
         } else {
             //we are disconnected -> connect
-            if (!Patterns.IP_ADDRESS.matcher(ipText.getText()).matches()) {
+            if (!Patterns.IP_ADDRESS.matcher(ipText.getText().toString()).matches()) {
                 makeText(MainActivity.this, getResources().getString(R.string.falscheIp), LENGTH_SHORT).show();
                 return;
             }
+
             if (controller.connect(ipText.getText().toString())) {
                 changeToConnected();
             }

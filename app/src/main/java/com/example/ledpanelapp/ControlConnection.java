@@ -9,7 +9,11 @@ public class ControlConnection {
     private ZContext context;
     private ZMQ.Socket socket;
 
-    private String connectionStr;
+    private String connectionStr = "";
+
+    final String STATUS = "0";
+    final String TURNON = "1";
+    final String TURNOFF = "2";
 
     public ControlConnection() {
         context = new ZContext();
@@ -18,15 +22,29 @@ public class ControlConnection {
 
     public boolean connect(String ip) {
         connectionStr = "tcp://" + ip + ":5555";
-        return socket.connect(connectionStr);
+        socket.connect(connectionStr);
+        getStatus();
+        return true;
     }
 
     public boolean disconnect() {
         return socket.disconnect(connectionStr);
     }
 
-    public byte[] send(String msgType, String payload) {
+    public void getStatus() {
+        send(STATUS, "");
+    }
+
+    public void turnOn() {
+        send(TURNON, "");
+    }
+
+    public void turnOff() {
+        send(TURNOFF, "");
+    }
+
+    private byte[] send(String msgType, String payload) {
         socket.send(msgType + " " + payload);
-        return socket.recv();
+        return socket.recv(0);
     }
 }
