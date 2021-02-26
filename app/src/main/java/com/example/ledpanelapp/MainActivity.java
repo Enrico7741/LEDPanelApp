@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Patterns;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // UI elements
     private Button connectBtn;
     private EditText ipText;
+    private Menu myMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         controller = new MainController();
         findViews();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.action_menu, menu);
+        MenuItem switchOnOffItem = menu.findItem(R.id.switchOnOffItem);
+        switchOnOffItem.setActionView(R.layout.switch_layout);
+        myMenu = menu;
+        myMenu.findItem(R.id.switchOnOffItem).setVisible(false);
+        return true;
     }
 
     private void findViews() {
@@ -51,10 +66,12 @@ public class MainActivity extends AppCompatActivity {
     public void changeToConnected() {
         connectBtn.setText(getResources().getString(R.string.trennen));
         ipText.setEnabled(false);
+        myMenu.findItem(R.id.switchOnOffItem).setVisible(true);
     }
 
     public void changeToDisconnected() {
         connectBtn.setText(getResources().getString(R.string.verbinden));
         ipText.setEnabled(true);
+        myMenu.findItem(R.id.switchOnOffItem).setVisible(false);
     }
 }
