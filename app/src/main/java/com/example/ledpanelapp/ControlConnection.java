@@ -6,10 +6,10 @@ import org.zeromq.SocketType;
 
 public class ControlConnection {
 
-    ZContext context;
-    ZMQ.Socket socket;
+    private ZContext context;
+    private ZMQ.Socket socket;
 
-    String connectionStr;
+    private String connectionStr;
 
     public ControlConnection() {
         context = new ZContext();
