@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">LEDPanelApp</string>
+    <string name="app_name">LED Panel</string>
+    <string name="defaultIp">192.168.0.109</string>
+    <string name="ip_adresse">IP-Adresse</string>
+    <string name="verbinden">Verbinden</string>
+    <string name="trennen">Trennen</string>
+    <string name="falscheIp">Ungültige IP-Adresse.</string>
 </resources>
