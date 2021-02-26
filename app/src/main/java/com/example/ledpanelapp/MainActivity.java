@@ -1,15 +1,24 @@
 package com.example.ledpanelapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.Toast;
+
+import org.zeromq.ZMQ;
+
+import java.util.logging.Logger;
 
 import static android.widget.Toast.*;
 
@@ -21,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private Button connectBtn;
     private EditText ipText;
     private Menu myMenu;
+    private SeekBar seekbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,22 @@ public class MainActivity extends AppCompatActivity {
         menuInflater.inflate(R.menu.action_menu, menu);
         MenuItem switchOnOffItem = menu.findItem(R.id.switchOnOffItem);
         switchOnOffItem.setActionView(R.layout.switch_layout);
+
+        SwitchCompat switchOnOff = switchOnOffItem.getActionView().findViewById(R.id.switchOnOff);
+        switchOnOff.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(final CompoundButton buttonView, boolean isChecked) {
+                if(!switchOnOff.isPressed()) {
+                    return;
+                }
+                if (switchOnOff.isChecked()) {
+                    controller.turnOn();
+                } else {
+                    controller.turnOff();
+                }
+            }
+        });
+
         myMenu = menu;
         myMenu.findItem(R.id.switchOnOffItem).setVisible(false);
         return true;
@@ -44,6 +70,27 @@ public class MainActivity extends AppCompatActivity {
     private void findViews() {
         connectBtn = (Button)findViewById(R.id.button_connect);
         ipText = (EditText)findViewById(R.id.editText_ip);
+        seekbar = (SeekBar)findViewById(R.id.seekBar2);;
+        seekbar.setEnabled(false);
+        seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,boolean fromUser) {
+                int ret = ((seekbar.getProgress() + 1) * 10);
+                controller.setBrightness(ret);
+
+            }
+        });
+
     }
 
     public void onClickConnect(View v) {
@@ -68,11 +115,13 @@ public class MainActivity extends AppCompatActivity {
         connectBtn.setText(getResources().getString(R.string.trennen));
         ipText.setEnabled(false);
         myMenu.findItem(R.id.switchOnOffItem).setVisible(true);
+        seekbar.setEnabled(true);
     }
 
     public void changeToDisconnected() {
         connectBtn.setText(getResources().getString(R.string.verbinden));
         ipText.setEnabled(true);
         myMenu.findItem(R.id.switchOnOffItem).setVisible(false);
+        seekbar.setEnabled(false);
     }
 }

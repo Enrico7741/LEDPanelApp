@@ -33,4 +33,8 @@ public class MainController {
     public void turnOff() {
         connection.turnOff();
     }
+
+    public void setBrightness(int value) {
+        connection.setBrightness(value);
+    }
 }

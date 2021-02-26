@@ -5,4 +5,5 @@
     <string name="verbinden">Verbinden</string>
     <string name="trennen">Trennen</string>
     <string name="falscheIp">Ungültige IP-Adresse.</string>
+    <string name="helligkeit">Helligkeit</string>
 </resources>

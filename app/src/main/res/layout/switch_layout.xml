@@ -13,5 +13,5 @@
         android:layout_centerVertical="true"
         android:scaleX="1.1"
         android:scaleY="1.1"
-        android:padding="16dp"/>
+        android:padding="16dp" />
 </RelativeLayout>

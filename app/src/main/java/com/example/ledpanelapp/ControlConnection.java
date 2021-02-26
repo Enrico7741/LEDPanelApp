@@ -14,6 +14,7 @@ public class ControlConnection {
     final String STATUS = "0";
     final String TURNON = "1";
     final String TURNOFF = "2";
+    final String BRIGHTNESS = "3";
 
     public ControlConnection() {
         context = new ZContext();
@@ -41,6 +42,10 @@ public class ControlConnection {
 
     public void turnOff() {
         send(TURNOFF, "");
+    }
+
+    public void setBrightness(int value) {
+        send(BRIGHTNESS, Integer.toString(value));
     }
 
     private byte[] send(String msgType, String payload) {
